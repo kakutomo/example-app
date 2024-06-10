@@ -7,6 +7,7 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>{{ $title ?? 'つぶやきアプリ' }}</title>
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @stack('css')
 
     </head>
     <body class="bg-gray-50">

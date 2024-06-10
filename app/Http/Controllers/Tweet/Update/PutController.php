@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\Tweet\UpdateRequest;
 use App\Models\Tweet;
-use app\Services\TweetService;
+use App\Services\TweetService;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 class PutController extends Controller
 {
@@ -21,7 +21,6 @@ class PutController extends Controller
         }
         $tweetId = $request->Id();
         $tweet = Tweet::where('id',$tweetId)->findOrFail($tweetId);
-        // dd($tweet);
         $tweet->content = $request->tweet();
         $tweet->save();
         return redirect()

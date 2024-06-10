@@ -1,6 +1,6 @@
 @auth
     <div class="p-4">
-        <from action="{{ route('tweet.create')}}" method="post">
+        <form action="{{ route('tweet.create')}}" method="post">
             @csrf
             <div class="mt-1">
                 <textarea
@@ -19,8 +19,9 @@
                 <x-element.button>
                     つぶやく
                 </x-element.button>
+                {{-- <button type="submit">追加</button> --}}
             </div>
-        </from>
+        </form>
     </div>
 @endauth
 @guest
