@@ -2,28 +2,29 @@
 
 namespace App\Mail;
 
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
+use Illuminate\Mail\Markdown;
 use Illuminate\Queue\SerializesModels;
-use App\Models\User;
 
-class NweUserIntroduction extends Mailable implements ShouldQueue
+class DailyTweetCount extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
-    public $subject = '新しいユーザが追加されました';
+
     public User $toUser;
-    public User $newUser;
+    public int $count;
     /**
      * Create a new message instance.
      */
-    public function __construct(User $toUser,User $newUser)
+    public function __construct(User $toUser , int $count)
     {
         //
         $this->toUser = $toUser;
-        $this->newUser = $newUser;
+        $this->count = $count;
     }
 
     /**
@@ -32,7 +33,7 @@ class NweUserIntroduction extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Nwe User Introduction',
+            subject: "昨日は{$this->count}件のつぶやきが追加されました。",
         );
     }
 
@@ -42,9 +43,7 @@ class NweUserIntroduction extends Mailable implements ShouldQueue
     public function content(): Content
     {
         return new Content(
-            // view: 'view.name',
-            // view: 'email.new_user_introduction',
-            markdown: 'email.new_user_introduction',
+            markdown:'email.daily_tweet_count'
         );
     }
 
