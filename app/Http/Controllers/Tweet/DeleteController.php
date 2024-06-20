@@ -25,13 +25,14 @@ class DeleteController extends Controller
     //     return redirect()->route("tweet.index")->with('feedback.success','つぶやきを削除しました');
     //     // dd($request);
     // }
-    public function __invoke(Request $request)
+    public function __invoke(Request $request,TweetService $tweetService)
     {
         //
         // dd($request->all());
         $tweetId = (int) $request->route('tweetId');
-        $tweet = Tweet::where('id', $tweetId)->firstOrFail();
-        $tweet->delete();
+        // $tweet = Tweet::where('id', $tweetId)->firstOrFail();
+        // $tweet->delete();
+        $tweetService->deleteTweet($tweetId);
         return redirect()->route("tweet.index")->with('feedback.success','つぶやきを削除しました');
         // dd($request);
     }
