@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Tweet;
 use App\Services\TweetService;
+use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class DeleteController extends Controller
@@ -30,6 +31,9 @@ class DeleteController extends Controller
         //
         // dd($request->all());
         $tweetId = (int) $request->route('tweetId');
+        if( !$tweetService->checkOwnTweet($request->user()->id,$tweetId)){
+            throw new AccessDeniedException();
+        }
         // $tweet = Tweet::where('id', $tweetId)->firstOrFail();
         // $tweet->delete();
         $tweetService->deleteTweet($tweetId);
